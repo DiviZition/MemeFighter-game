@@ -12,18 +12,16 @@ public struct DoubleDamageEffect : IBoostEffect
     public bool IsEnded { get; private set; }
     public float Progress { get; private set; }
 
-    private PlayerAttack _playerAttack;
-
     private bool _isFirstStepDone;
     private int _damageAdded;
 
-    public void DoLogic(Transform transform)
+    public void DoLogic(PlayerComponents components)
     {
         Progress += Time.deltaTime / _effectDuration;
 
         if (Progress > 1)
         {
-            _playerAttack.ChangeDamage(_playerAttack.CurrentDamage - _damageAdded);
+            components.Attack.ChangeDamage(components.Attack.CurrentDamage - _damageAdded);
             IsEnded = true;
         }
 
@@ -31,15 +29,13 @@ public struct DoubleDamageEffect : IBoostEffect
             return;
 
         _isFirstStepDone = true;
-        _playerAttack = transform.GetComponent<PlayerAttack>();
-        _damageAdded = Mathf.CeilToInt(_playerAttack.CurrentDamage);
-        _playerAttack.ChangeDamage(_playerAttack.CurrentDamage + _damageAdded);
+        _damageAdded = Mathf.CeilToInt(components.Attack.CurrentDamage);
+        components.Attack.ChangeDamage(components.Attack.CurrentDamage + _damageAdded);
         Debug.Log(_damageAdded);
     }
 
     public void ResetValues()
     {
-        _playerAttack = null;
         _isFirstStepDone = false;
         IsEnded = false;
         _damageAdded = 0;

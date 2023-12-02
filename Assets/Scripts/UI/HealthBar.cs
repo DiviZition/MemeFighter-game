@@ -1,10 +1,17 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Image _healthBar;
     private PlayerHealth _playerHealth;
+
+    [Inject]
+    private void Construct(PlayerComponents components)
+    {
+        _playerHealth = components.Health;
+    }
 
     private void FixedUpdate()
     {
@@ -16,6 +23,4 @@ public class HealthBar : MonoBehaviour
 
         _healthBar.fillAmount = _playerHealth.CurrentHealth / _playerHealth.StartHealth;
     }
-
-    public void LinkToPlayer(PlayerHealth playerHealth) => _playerHealth = playerHealth;
 }

@@ -1,20 +1,25 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
-public class StartGame : MonoBehaviour
+public class StartGame : MonoInstaller
 {
-    [SerializeField] private Player[] _players;
+    [SerializeField] private PlayerComponents _playerPrefab;
+    [SerializeField] private Transform _spawnPoint;
 
-    void Start()
+    public override void InstallBindings()
     {
-        for (int i = 0; i < _players.Length; i++)
-        {
-            Instantiate(_players[i].PlayerPrefab, _players[i].SpawnPoint);
-        }
+        Container.Bind<PlayerComponents>()
+            .FromComponentInNewPrefab(_playerPrefab)
+            .AsSingle()
+            .NonLazy();
+    }
 
+    public override void Start()
+    {
+        PlayerComponents player = Container.Resolve<PlayerComponents>();
+        player.Transform.position = _spawnPoint.position;
+        player.Transform.parent = _spawnPoint;
     }
 
     private void Update()
@@ -22,11 +27,4 @@ public class StartGame : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
-}
-
-[Serializable]
-public struct Player
-{
-    public GameObject PlayerPrefab;
-    public Transform SpawnPoint;
 }

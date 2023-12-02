@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class PlayerHealth : MonoBehaviour, IDamagable
 {
@@ -9,8 +10,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     [SerializeField] private float _damageCooldown;
     [SerializeField] private float _diyingSpeed;
 
-    private Transform _transform;
-    private Collider2D _collider;
+    private PlayerComponents _components;
 
     private Color _defaultColor;
 
@@ -21,10 +21,12 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     public int StartHealth => _startHealth;
     public int CurrentHealth => _currentHealth;
-    private void Start()
+
+    [Inject]
+    private void Construct(PlayerComponents components)
     {
-        _transform = this.gameObject.transform;
-        _collider = this.gameObject.GetComponent<Collider2D>();
+        _components = components;
+
         _currentHealth = _startHealth;
         _defaultColor = _playersVisual.color;
     }
@@ -68,15 +70,16 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     private void Die()
     {
-        if(_collider.enabled == true)
+        if(_components.Collider.enabled == true)
         {
-            _collider.attachedRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
-            _collider.enabled = false;
+            _components.Collider.attachedRigidbody.constraints = RigidbodyConstraints2D.FreezeAll;
+            _components.Collider.enabled = false;
         }
 
-        _transform.localScale = Vector3.MoveTowards(_transform.localScale, Vector3.zero, _diyingSpeed);
+        _components.Transform.localScale = Vector3.MoveTowards
+            (_components.Transform.localScale, Vector3.zero, _diyingSpeed);
 
-        if(_transform.localScale == Vector3.zero)
+        if(_components.Transform.localScale == Vector3.zero)
             Destroy(this.gameObject);
     }
 }

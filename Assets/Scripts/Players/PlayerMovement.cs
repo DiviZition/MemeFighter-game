@@ -1,9 +1,8 @@
 using UnityEngine;
+using Zenject;
 
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private Transform _transform;
-    [SerializeField] private Rigidbody2D _rbPlayer;
     [SerializeField] private float _defaultSpeed;
     [SerializeField] private float _jumpImpuls;
     [SerializeField] private float _gravityModifier;
@@ -13,12 +12,22 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _radiusOfChecker;
     [SerializeField] private float _additionalJumps = 1;
 
+    private Transform _transform;
+    private Rigidbody2D _rbPlayer;
+
     private Collider2D[] _trash = new Collider2D[2];
     private float _firstJumpCooleDown;
     private float _currentAdditionalJumps;
     private bool _isGrounded;
 
     public float CurrentSpeed => _defaultSpeed;
+
+    [Inject]
+    private void Construct(PlayerComponents components)
+    {
+        _transform = components.Transform;
+        _rbPlayer = components.Rigidbody;
+    }
 
     private void Update()
     {
@@ -102,6 +111,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (_transform == null)
+            return;
+
         Gizmos.color = Color.red;
         Gizmos.DrawSphere((Vector2)_transform.position + _groundCheckerOffset, _radiusOfChecker);
     }

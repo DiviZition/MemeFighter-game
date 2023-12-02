@@ -1,14 +1,21 @@
 using UnityEngine;
+using Zenject;
 
-public class PadTaker : MonoBehaviour
+public class PlayerPadTaker : MonoBehaviour
 {
     [SerializeField] private Vector2 _takerOffsetPosition;
-    [SerializeField] private Transform _transform;
     [SerializeField] private LayerMask _effectsLayer;
     [SerializeField] private float _radiusTakeZone;
 
+    private Transform _transform;
     public bool IsHasBoost { get; private set; } = false;
     public TypeOfEffect EffectType { get; private set; } = TypeOfEffect.Default;
+
+    [Inject]
+    private void Construct(PlayerComponents components)
+    {
+        _transform = components.Transform;
+    }
 
     void Update()
     {

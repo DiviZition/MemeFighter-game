@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 6908680084048938544}
   - component: {fileID: 4058542383725340232}
   - component: {fileID: 4111310005046760193}
+  - component: {fileID: 5465238290782925045}
   - component: {fileID: 15771536554920822}
   - component: {fileID: -2003939451436252365}
   - component: {fileID: 4080837958941395384}
@@ -172,6 +173,27 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
+--- !u!114 &5465238290782925045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368649293943814034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f91ad9456ef738479d0f33dc0974c97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transform: {fileID: 6908680084048938544}
+  _rigidbody: {fileID: 4111310005046760193}
+  _collider: {fileID: 4058542383725340232}
+  _movement: {fileID: 15771536554920822}
+  _health: {fileID: -2003939451436252365}
+  _attack: {fileID: 4080837958941395384}
+  _dieFromFall: {fileID: -6692574607864425083}
+  _padTaker: {fileID: -416867404271020856}
+  _padUsing: {fileID: 6757980187305702929}
 --- !u!114 &15771536554920822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,8 +206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180b3165312a9c84cba417f04957ef53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 6908680084048938544}
-  _rbPlayer: {fileID: 4111310005046760193}
   _defaultSpeed: 5
   _jumpImpuls: 8
   _gravityModifier: 7
@@ -246,8 +266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5dc781e8bf61a645ab666ebc3c2f9a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: {fileID: -2003939451436252365}
-  _transform: {fileID: 6908680084048938544}
   _hellDepth: -10
 --- !u!114 &-416867404271020856
 MonoBehaviour:
@@ -258,11 +276,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1368649293943814034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f56da81e39daf44c8d8cea8be205cb6, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ddfaeeee54d3df47a1c4d7eef046789, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _takerOffsetPosition: {x: 0.5, y: 0}
-  _transform: {fileID: 6908680084048938544}
   _effectsLayer:
     serializedVersion: 2
     m_Bits: 128
@@ -276,11 +293,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1368649293943814034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93f8899ba3eb41c478efa6c628924691, type: 3}
+  m_Script: {fileID: 11500000, guid: a42c387c861f67c48986e190c4eaa681, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _transform: {fileID: 6908680084048938544}
-  _padTaker: {fileID: -416867404271020856}
 --- !u!1 &8240873038095092593
 GameObject:
   m_ObjectHideFlags: 0

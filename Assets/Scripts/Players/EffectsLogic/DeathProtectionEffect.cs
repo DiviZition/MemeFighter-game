@@ -12,7 +12,7 @@ public struct DeathProtectionEffect : IBoostEffect
 
     public float Progress => throw new NotImplementedException();
 
-    public void DoLogic(Transform transform)
+    public void DoLogic(PlayerComponents components)
     {
         throw new NotImplementedException();
     }

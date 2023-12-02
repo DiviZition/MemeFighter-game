@@ -9,8 +9,9 @@ public struct NewEffect : IBoostEffect
 
     public bool IsEnded => throw new NotImplementedException();
 
+    public float Progress => throw new NotImplementedException();
 
-    public void DoLogic(Transform transform)
+    public void DoLogic(PlayerComponents components)
     {
         throw new NotImplementedException();
     }

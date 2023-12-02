@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -18,9 +19,11 @@ public class PlayerAttack : MonoBehaviour
 
     public int CurrentDamage => _currentDamage;
     public int StartDamage => _startDamage;
-    private void Start()
+
+    [Inject]
+    private void Construct(PlayerComponents components)
     {
-        _transform = this.gameObject.transform;
+        _transform = components.Transform;
         _attackCotoutine = DoAttack();
     }
 

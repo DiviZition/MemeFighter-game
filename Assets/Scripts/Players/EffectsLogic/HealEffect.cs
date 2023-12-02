@@ -15,9 +15,9 @@ public struct HealEffect : IBoostEffect
 
     public float Progress => 1;
 
-    public void DoLogic(Transform transform)
+    public void DoLogic(PlayerComponents components)
     {
-        transform.GetComponent<PlayerHealth>().TakeHeal(_healAmount);
+        components.Health.TakeHeal(_healAmount);
         IsEnded = true;
     }
 

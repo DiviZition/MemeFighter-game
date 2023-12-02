@@ -1,22 +1,22 @@
 using UnityEngine;
+using Zenject;
 
 public class PlayerDieFromFall : MonoBehaviour
 {
-    [SerializeField] private PlayerHealth _health;
-    [SerializeField] private Transform _transform;
-
     [SerializeField] private float _hellDepth = 10;
 
-    private void OnValidate()
+    private PlayerComponents _components;
+
+    [Inject]
+    private void Construct(PlayerComponents components)
     {
-        _transform = this.gameObject.transform;
-        _health = this.gameObject.GetComponent<PlayerHealth>();
+        _components = components;
     }
 
     private void FixedUpdate()
     {
-        if (_transform.position.y < Mathf.Abs(_hellDepth) * -1)
-            _health.TakeDamage(666);
+        if (_components.Transform.position.y < Mathf.Abs(_hellDepth) * -1)
+            _components.Health.TakeDamage(666);
     }
 
     private void OnDrawGizmos()

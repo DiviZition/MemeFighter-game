@@ -11,7 +11,9 @@ public struct DefaultEffect : IBoostEffect
 
     public bool IsEnded { get; private set; }
 
-    public void DoLogic(Transform transform)
+    public float Progress => 1;
+
+    public void DoLogic(PlayerComponents components)
     {
         Debug.Log("FAILURE! Default effect was called");
         IsEnded = true;

@@ -15,7 +15,7 @@ public struct OneHitShieldEffect : IBoostEffect
 
     public float Progress { get; private set; }
 
-    public void DoLogic(Transform transform)
+    public void DoLogic(PlayerComponents components)
     {
     }
 
