@@ -7,7 +7,7 @@ public struct DefaultEffect : IBoostEffect
     [SerializeField] private Sprite _effectsIcon;
 
     public Sprite EffectsIcon => _effectsIcon;
-    public TypeOfEffect TypeOfEffect => TypeOfEffect.DefaultEffect;
+    public TypeOfEffect TypeOfEffect => TypeOfEffect.Default;
 
     public bool IsEnded { get; private set; }
 

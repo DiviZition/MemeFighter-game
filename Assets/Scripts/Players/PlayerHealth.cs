@@ -19,6 +19,8 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     private bool _isHaveToDie = false;
 
+    public int StartHealth => _startHealth;
+    public int CurrentHealth => _currentHealth;
     private void Start()
     {
         _transform = this.gameObject.transform;
@@ -51,6 +53,17 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         }
 
         _currentHealth -= damage;
+    }
+
+    public void TakeHeal(int healAmount)
+    {
+        if (_currentHealth + healAmount > _startHealth)
+        {
+            _currentHealth = _startHealth;
+            return;
+        }
+
+        _currentHealth += healAmount;
     }
 
     private void Die()

@@ -9,7 +9,7 @@ public struct HealEffect : IBoostEffect
 
     public Sprite EffectsIcon => _effectsIcon;
 
-    public TypeOfEffect TypeOfEffect => TypeOfEffect.HealPlayer;
+    public TypeOfEffect TypeOfEffect => TypeOfEffect.Heal;
 
     public bool IsEnded { get; private set; }
 

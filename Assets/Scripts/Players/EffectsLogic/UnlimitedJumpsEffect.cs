@@ -13,7 +13,7 @@ public struct UnlimitedJumpsEffect : IBoostEffect
     private bool _isFirstStepDone;
 
     public Sprite EffectsIcon => _effectsIcon;
-    public TypeOfEffect TypeOfEffect => TypeOfEffect.UnlimitedJumpsEffect;
+    public TypeOfEffect TypeOfEffect => TypeOfEffect.UnlimitedJumps;
     public bool IsEnded { get; private set; }
 
 

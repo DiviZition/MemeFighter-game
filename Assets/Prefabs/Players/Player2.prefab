@@ -101,7 +101,6 @@ GameObject:
   - component: {fileID: -6692574607864425083}
   - component: {fileID: -416867404271020856}
   - component: {fileID: 6757980187305702929}
-  - component: {fileID: 7405297087803186256}
   m_Layer: 6
   m_Name: Player2
   m_TagString: Untagged
@@ -187,7 +186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transform: {fileID: 6908680084048938544}
   _rbPlayer: {fileID: 4111310005046760193}
-  _speed: 5
+  _defaultSpeed: 5
   _jumpImpuls: 8
   _gravityModifier: 7
   _isLeftPartOfKeyboard: 1
@@ -226,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ba3d401bfbdf945b33feca4ed12968, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 2
+  _startDamage: 2
   _fist: {fileID: 8134601074749252736}
   _isLeftPartOfKeyboard: 1
   _attackPosition: {x: 1.15, y: 0}
@@ -282,18 +281,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _transform: {fileID: 6908680084048938544}
   _padTaker: {fileID: -416867404271020856}
---- !u!114 &7405297087803186256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368649293943814034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 764cc437ea0ce9043b2b30cdbc829353, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8240873038095092593
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     [SerializeField] private Transform _transform;
     [SerializeField] private Rigidbody2D _rbPlayer;
-    [SerializeField] private float _speed;
+    [SerializeField] private float _defaultSpeed;
     [SerializeField] private float _jumpImpuls;
     [SerializeField] private float _gravityModifier;
     [SerializeField] private bool _isLeftPartOfKeyboard;
@@ -17,6 +17,9 @@ public class PlayerController : MonoBehaviour
     private float _firstJumpCooleDown;
     private float _currentAdditionalJumps;
     private bool _isGrounded;
+
+    public float CurrentSpeed => _defaultSpeed;
+
     private void Update()
     {
         if (_isLeftPartOfKeyboard == true)
@@ -45,7 +48,7 @@ public class PlayerController : MonoBehaviour
         {
             Deirection = -1;
         }
-        _rbPlayer.velocity = new Vector2(Deirection * _speed, _rbPlayer.velocity.y);
+        _rbPlayer.velocity = new Vector2(Deirection * _defaultSpeed, _rbPlayer.velocity.y);
         if (Deirection != 0 && Mathf.Sign(_transform.localScale.x) != Mathf.Sign(Deirection))
         {
             _transform.localScale = new Vector3
@@ -95,6 +98,7 @@ public class PlayerController : MonoBehaviour
     }
 
     public void ResetJumps() => _currentAdditionalJumps = _additionalJumps;
+    public void ChangeSpeed(float newSpeed) => _defaultSpeed = newSpeed;
 
     private void OnDrawGizmos()
     {

@@ -8,7 +8,7 @@ public class PadTaker : MonoBehaviour
     [SerializeField] private float _radiusTakeZone;
 
     public bool IsHasBoost { get; private set; } = false;
-    public TypeOfEffect EffectType { get; private set; } = TypeOfEffect.DefaultEffect;
+    public TypeOfEffect EffectType { get; private set; } = TypeOfEffect.Default;
 
     void Update()
     {
@@ -35,7 +35,7 @@ public class PadTaker : MonoBehaviour
 
     public void ResetEffect()
     {
-        EffectType = TypeOfEffect.DefaultEffect;
+        EffectType = TypeOfEffect.Default;
         IsHasBoost = false;
     }
 }

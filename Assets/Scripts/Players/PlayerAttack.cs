@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerAttack : MonoBehaviour
 {
-    [SerializeField] private int _damage;
+    [SerializeField] private int _startDamage;
     [SerializeField] private SpriteRenderer _fist;
     [SerializeField] private bool _isLeftPartOfKeyboard;
     [SerializeField] private Vector2 _attackPosition;
@@ -14,7 +14,10 @@ public class PlayerAttack : MonoBehaviour
     private Transform _transform;
     private IEnumerator _attackCotoutine;
     private float _attackTimer;
+    private int _currentDamage;
 
+    public int CurrentDamage => _currentDamage;
+    public int StartDamage => _startDamage;
     private void Start()
     {
         _transform = this.gameObject.transform;
@@ -48,7 +51,7 @@ public class PlayerAttack : MonoBehaviour
 
         if (overlappedCollider != null)
         {
-            overlappedCollider.gameObject.GetComponent<IDamagable>().TakeDamage(_damage);
+            overlappedCollider.gameObject.GetComponent<IDamagable>().TakeDamage(_currentDamage);
         }
 
         _fist.enabled = true;
@@ -60,12 +63,15 @@ public class PlayerAttack : MonoBehaviour
         StopCoroutine(_attackCotoutine);
     }
 
+    public void ChangeDamage(int newDamage) => _currentDamage = newDamage;
+
     private void OnDrawGizmos()
     {
         if (_transform == null)
             return;
 
-        Gizmos.DrawSphere((Vector2)_transform.position + _attackPosition * Mathf.Sign(_transform.localScale.x), 
+        Gizmos.DrawSphere(
+            (Vector2)_transform.position + _attackPosition * Mathf.Sign(_transform.localScale.x), 
             _attackRadius);
     }
 }

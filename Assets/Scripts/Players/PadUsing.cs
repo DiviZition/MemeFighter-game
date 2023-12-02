@@ -11,7 +11,7 @@ public class PadUsing : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.X) && _boostEffect == null)
         {
-            if (_padTaker.EffectType == TypeOfEffect.DefaultEffect)
+            if (_padTaker.EffectType == TypeOfEffect.Default)
                 return;
 
             _boostEffect = EffectsStorage.GetEffect(_padTaker.EffectType);
