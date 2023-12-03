@@ -16,6 +16,11 @@ public struct NewEffect : IBoostEffect
         throw new NotImplementedException();
     }
 
+    public void ForceQuit()
+    {
+        throw new NotImplementedException();
+    }
+
     public void ResetValues()
     {
         throw new NotImplementedException();

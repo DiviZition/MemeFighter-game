@@ -47,30 +47,30 @@ public class EffectsIndicator : MonoBehaviour
 
     private void SetupActieveEffect()
     {
-        if (_components.PadUsing.EquippedEffect == null)
+        if (_components.PadUsing.ActieveEffect == null)
         {
             _effectInUseIcon.enabled = false;
             _effectInUseType = TypeOfEffect.Default;
             return;
         }
 
-        if (_components.PadUsing.EquippedEffect.TypeOfEffect == _effectInUseType)
+        if (_components.PadUsing.ActieveEffect.TypeOfEffect == _effectInUseType)
             return;
 
         _effectInUseIcon.enabled = true;
 
-        _effectInUseType = _components.PadUsing.EquippedEffect.TypeOfEffect;
-        _effectInUseIcon.sprite = _components.PadUsing.EquippedEffect.EffectsIcon;
+        _effectInUseType = _components.PadUsing.ActieveEffect.TypeOfEffect;
+        _effectInUseIcon.sprite = _components.PadUsing.ActieveEffect.EffectsIcon;
     }
 
     private void UpdateActieveEffectsProgress()
     {
-        if (_components.PadUsing.EquippedEffect == null)
+        if (_components.PadUsing.ActieveEffect == null)
         {
             _effectProgress.fillAmount = 0;
             return;
         }
 
-        _effectProgress.fillAmount = _components.PadUsing.EquippedEffect.Progress;
+        _effectProgress.fillAmount = _components.PadUsing.ActieveEffect.Progress;
     }
 }

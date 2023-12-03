@@ -28,8 +28,14 @@ public struct UnlimitedJumpsEffect : IBoostEffect
             IsEnded = true;
     }
 
+    public void ForceQuit()
+    {
+        ResetValues();
+    }
+
     public void ResetValues()
     {
         IsEnded = false;
+        Progress = 0;
     }
 }

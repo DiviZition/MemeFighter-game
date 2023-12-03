@@ -5,7 +5,7 @@ public class PlayerPadUsing : MonoBehaviour
 {
     private PlayerComponents _components;
 
-    public IBoostEffect EquippedEffect { get; private set; }
+    public IBoostEffect ActieveEffect { get; private set; }
     public float ActieveEffectProgress { get; private set; }
 
     [Inject]
@@ -16,27 +16,39 @@ public class PlayerPadUsing : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X) && EquippedEffect == null)
+        ActivateEffect();
+
+        if (ActieveEffect == null)
+            return;
+
+        ActieveEffect.DoLogic(_components);
+        ActieveEffectProgress = ActieveEffect.Progress;
+
+        if (ActieveEffect.IsEnded == true)
+            ClearActieveEffect();
+    }
+
+    private void ActivateEffect()
+    {
+        if (Input.GetKeyDown(KeyCode.X))
         {
             if (_components.PadTaker.EffectType == TypeOfEffect.Default)
                 return;
 
-            EquippedEffect = EffectsStorage.GetEffect(_components.PadTaker.EffectType);
+            ClearActieveEffect();
+            ActieveEffect = EffectsStorage.GetEffect(_components.PadTaker.EffectType);
             _components.PadTaker.ResetEffect();
         }
+    }
 
-        if (EquippedEffect == null)
+    private void ClearActieveEffect()
+    {
+        if (ActieveEffect == null)
             return;
 
-        EquippedEffect.DoLogic(_components);
-        ActieveEffectProgress = EquippedEffect.Progress;
-        
-        if (EquippedEffect.IsEnded == true)
-        {
-            EquippedEffect.ResetValues();
-            ActieveEffectProgress = 0;
-            EquippedEffect = null;
-            return;
-        }
+        ActieveEffect.ForceQuit();
+        ActieveEffect.ResetValues();
+        ActieveEffectProgress = 0;
+        ActieveEffect = null;
     }
 }

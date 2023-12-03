@@ -5,6 +5,9 @@ using Zenject;
 public class HealthBar : MonoBehaviour
 {
     [SerializeField] private Image _healthBar;
+    [SerializeField] private Image _deathProtection;
+    [SerializeField] private Image _oneHitShield;
+
     private PlayerHealth _playerHealth;
 
     [Inject]
@@ -21,6 +24,18 @@ public class HealthBar : MonoBehaviour
             return;
         }
 
-        _healthBar.fillAmount = _playerHealth.CurrentHealth / _playerHealth.StartHealth;
+        SetupHealthBurFilling();
+        SetupEffectsIconsActieve();
+    }
+
+    private void SetupHealthBurFilling()
+    {
+        _healthBar.fillAmount = (float)_playerHealth.CurrentHealth / (float)_playerHealth.StartHealth;
+    }
+
+    private void SetupEffectsIconsActieve()
+    {
+        _deathProtection.enabled = _playerHealth.IsHaveDeathProtection;
+        _oneHitShield.enabled = _playerHealth.IsHaveHitProtection;
     }
 }

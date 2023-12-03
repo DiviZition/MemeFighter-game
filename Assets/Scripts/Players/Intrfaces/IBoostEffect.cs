@@ -11,4 +11,5 @@ public interface IBoostEffect
     public void DoLogic(PlayerComponents components);
     /// <summary> Call this method when an effect is ends. It resets effect so u can reuse it </summary>
     public void ResetValues();
+    public void ForceQuit();
 }

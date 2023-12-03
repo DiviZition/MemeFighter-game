@@ -16,8 +16,10 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     private float _damageTimer;
     private int _currentHealth;
-
     private bool _isHaveToDie = false;
+
+    public bool IsHaveDeathProtection { get; private set; }
+    public bool IsHaveHitProtection { get; private set; }
 
     public int StartHealth => _startHealth;
     public int CurrentHealth => _currentHealth;
@@ -29,6 +31,12 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
         _currentHealth = _startHealth;
         _defaultColor = _playersVisual.color;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+            TakeDamage(2);
     }
 
     private void FixedUpdate()
@@ -44,17 +52,34 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         if (_damageTimer > Time.time)
             return;
 
-        _damageTimer = Time.time + _damageCooldown;
-
-        _playersVisual.color = _dieColor;
-
-        if (_currentHealth - damage <= 0)
+        if (IsHaveHitProtection == true)
         {
-            _isHaveToDie = true;
+            IsHaveHitProtection = false;
             return;
         }
 
+        _damageTimer = Time.time + _damageCooldown;
+        GetHit(damage);
+    }
+
+    private void GetHit(int damage)
+    {
+        _playersVisual.color = _dieColor;
+
         _currentHealth -= damage;
+
+        if (_currentHealth <= 0)
+        {
+            if (IsHaveDeathProtection == true)
+            {
+                IsHaveDeathProtection = false;
+                _currentHealth = 1;
+            }
+            else
+            {
+                _isHaveToDie = true;
+            }
+        }
     }
 
     public void TakeHeal(int healAmount)
@@ -67,6 +92,9 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
         _currentHealth += healAmount;
     }
+
+    public void SetOneHitShield(bool isEnabled) => IsHaveHitProtection = isEnabled;
+    public void SetDeathProtection(bool isEnabled) => IsHaveDeathProtection = isEnabled;
 
     private void Die()
     {

@@ -4,21 +4,24 @@ using UnityEngine;
 [Serializable]
 public struct DeathProtectionEffect : IBoostEffect
 {
-    public Sprite EffectsIcon => throw new NotImplementedException();
+    [SerializeField] private Sprite _effectsIcon;
 
-    public TypeOfEffect TypeOfEffect => throw new NotImplementedException();
+    public Sprite EffectsIcon => _effectsIcon;
+    public TypeOfEffect TypeOfEffect => TypeOfEffect.DeathProtection;
 
-    public bool IsEnded => throw new NotImplementedException();
-
-    public float Progress => throw new NotImplementedException();
+    public bool IsEnded { get; private set; }
+    public float Progress => 1;
 
     public void DoLogic(PlayerComponents components)
     {
-        throw new NotImplementedException();
+        components.Health.SetDeathProtection(true);
+        IsEnded = true;
     }
+
+    public void ForceQuit() { }
 
     public void ResetValues()
     {
-        throw new NotImplementedException();
+        IsEnded = false;
     }
 }

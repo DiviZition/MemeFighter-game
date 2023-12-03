@@ -19,6 +19,8 @@ public struct DefaultEffect : IBoostEffect
         IsEnded = true;
     }
 
+    public void ForceQuit() { }
+
     public void ResetValues()
     {
         IsEnded = false;
