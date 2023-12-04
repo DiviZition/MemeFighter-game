@@ -96,6 +96,7 @@ GameObject:
   - component: {fileID: 6802987190818833234}
   - component: {fileID: 6802987190818833233}
   - component: {fileID: 6802987190818833232}
+  - component: {fileID: 990362988529896781}
   m_Layer: 7
   m_Name: EffectPad
   m_TagString: Untagged
@@ -171,3 +172,20 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 6802987190481596217}
   _rigidbody: {fileID: 6802987190818833233}
   _fallingSpeed: 5
+--- !u!114 &990362988529896781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6802987190818833239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b4464f6a895b6848a38da26286a1696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _collider: {fileID: 6802987190818833234}
+  _renderer: {fileID: 6802987190481596217}
+  _lifeDuration: 20
+  _startsBlinkingAfter: 0.75
+  _blinkingSpeed: 4
