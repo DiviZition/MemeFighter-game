@@ -11,15 +11,14 @@ public class PlayerPadTaker : MonoBehaviour
     public bool IsHasBoost { get; private set; } = false;
     public TypeOfEffect EffectType { get; private set; } = TypeOfEffect.Default;
 
-    [Inject]
-    private void Construct(PlayerComponents components)
+    private void Start()
     {
-        _transform = components.Transform;
+        _transform = this.GetComponent<Transform>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F) && IsHasBoost == false)
+        if (Input.GetKeyDown(ControllsConfig.PickUp) && IsHasBoost == false)
         {
             Collider2D foundPad;
 

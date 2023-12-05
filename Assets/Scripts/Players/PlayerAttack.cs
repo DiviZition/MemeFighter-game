@@ -6,7 +6,6 @@ public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private int _startDamage;
     [SerializeField] private SpriteRenderer _fist;
-    [SerializeField] private bool _isLeftPartOfKeyboard;
     [SerializeField] private Vector2 _attackPosition;
     [SerializeField] private float _attackRadius;
     [SerializeField] private float _attackDuration;
@@ -20,33 +19,29 @@ public class PlayerAttack : MonoBehaviour
     public int CurrentDamage => _currentDamage;
     public int StartDamage => _startDamage;
 
-    [Inject]
-    private void Construct(PlayerComponents components)
+    private void Start()
     {
-        _transform = components.Transform;
-        _attackCotoutine = DoAttack();
+        _transform = this.GetComponent<Transform>();
+        _attackCotoutine = AttackLogic();
     }
 
     private void Update()
     {
-        if (_isLeftPartOfKeyboard == true)
-            DoAttack(KeyCode.Space);
-        else if (_isLeftPartOfKeyboard == false)
-            DoAttack(KeyCode.KeypadEnter);
+        DoAttack();
 
     }
 
-    private void DoAttack(KeyCode attackButton)
+    private void DoAttack()
     {
-        if (Input.GetKeyDown(attackButton) && _attackTimer < Time.time)
+        if (Input.GetKeyDown(ControllsConfig.Attack) && _attackTimer < Time.time)
         {
             _attackTimer = Time.time + _attackDuration;
-            _attackCotoutine = DoAttack();
+            _attackCotoutine = AttackLogic();
             StartCoroutine(_attackCotoutine);
         }
     }
 
-    private IEnumerator DoAttack()
+    private IEnumerator AttackLogic()
     {
         Collider2D overlappedCollider = Physics2D.OverlapCircle
             ((Vector2)_transform.position + _attackPosition * Mathf.Sign(_transform.localScale.x),

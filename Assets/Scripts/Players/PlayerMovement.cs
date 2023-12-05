@@ -6,7 +6,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float _defaultSpeed;
     [SerializeField] private float _jumpImpuls;
     [SerializeField] private float _gravityModifier;
-    [SerializeField] private bool _isLeftPartOfKeyboard;
     [SerializeField] private LayerMask _groundedMask;
     [SerializeField] private Vector2 _groundCheckerOffset;
     [SerializeField] private float _radiusOfChecker;
@@ -22,38 +21,32 @@ public class PlayerMovement : MonoBehaviour
 
     public float CurrentSpeed => _defaultSpeed;
 
-    [Inject]
-    private void Construct(PlayerComponents components)
+    private void Start()
     {
+        PlayerComponents components = this.GetComponent<PlayerComponents>();
+
         _transform = components.Transform;
         _rbPlayer = components.Rigidbody;
     }
 
     private void Update()
     {
-        if (_isLeftPartOfKeyboard == true)
-        {
-            MovePlayer(KeyCode.D, KeyCode.A);
-            JumpPlayer(KeyCode.W);
-        }
-        else
-        {
-            MovePlayer(KeyCode.RightArrow, KeyCode.LeftArrow);
-            JumpPlayer(KeyCode.UpArrow);
-        }
+        MovePlayer();
+        JumpPlayer();
+
         CheckIsGrounded();
         ModifiGravity();
     }
 
-    private void MovePlayer(KeyCode Right, KeyCode Left)
+    private void MovePlayer()
     {
         sbyte Deirection = 0;
-        if (Input.GetKey(Right))
+        if (Input.GetKey(ControllsConfig.Right))
         {
             Deirection = 1;
 
         }
-        if (Input.GetKey(Left))
+        if (Input.GetKey(ControllsConfig.Left))
         {
             Deirection = -1;
         }
@@ -65,10 +58,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void JumpPlayer(KeyCode up)
+    private void JumpPlayer()
     {
 
-        if (Input.GetKeyDown(up))
+        if (Input.GetKeyDown(ControllsConfig.Jump) || Input.GetKeyDown(ControllsConfig.Up))
         {
             if (_isGrounded == true && _firstJumpCooleDown < Time.time)
             {

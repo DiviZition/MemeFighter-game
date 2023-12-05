@@ -5,11 +5,20 @@ using Zenject;
 public class StartGame : MonoInstaller
 {
     [SerializeField] private PlayerComponents _playerPrefab;
-    [SerializeField] private Transform _spawnPoint;
+    [SerializeField] private SpawnPoints _spawnPoints;
+
+    private Transform _playersParent;
 
     public override void InstallBindings()
     {
-        Container.Bind<PlayerComponents>()
+        Container.Bind<DiContainer>()
+            .FromInstance(Container)
+            .AsSingle()
+            .NonLazy();
+
+        //Создаем класс плэйер спавнер. В нем спавним игроков приклеиваем их к контейнеру.
+        //Контейнер в контейнере
+        Container.Bind<PlayerComponents>() 
             .FromComponentInNewPrefab(_playerPrefab)
             .AsSingle()
             .NonLazy();
@@ -17,9 +26,11 @@ public class StartGame : MonoInstaller
 
     public override void Start()
     {
+        _playersParent = new GameObject("Players").transform;
+
         PlayerComponents player = Container.Resolve<PlayerComponents>();
-        player.Transform.position = _spawnPoint.position;
-        player.Transform.parent = _spawnPoint;
+        player.Transform.position = _spawnPoints.GetNextSpawnPoint(0);
+        player.Transform.parent = _playersParent;
     }
 
     private void Update()

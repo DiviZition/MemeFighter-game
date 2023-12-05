@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 6
   m_Sprite: {fileID: 21300000, guid: 7ea0af47874215244bc8fc7bc9bc0a42, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -99,7 +99,6 @@ GameObject:
   - component: {fileID: 15771536554920822}
   - component: {fileID: -2003939451436252365}
   - component: {fileID: 4080837958941395384}
-  - component: {fileID: -6692574607864425083}
   - component: {fileID: -416867404271020856}
   - component: {fileID: 6757980187305702929}
   m_Layer: 6
@@ -191,7 +190,6 @@ MonoBehaviour:
   _movement: {fileID: 15771536554920822}
   _health: {fileID: -2003939451436252365}
   _attack: {fileID: 4080837958941395384}
-  _dieFromFall: {fileID: -6692574607864425083}
   _padTaker: {fileID: -416867404271020856}
   _padUsing: {fileID: 6757980187305702929}
 --- !u!114 &15771536554920822
@@ -206,10 +204,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 180b3165312a9c84cba417f04957ef53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _defaultSpeed: 5
+  _defaultSpeed: 6
   _jumpImpuls: 8
   _gravityModifier: 7
-  _isLeftPartOfKeyboard: 1
   _groundedMask:
     serializedVersion: 2
     m_Bits: 65
@@ -229,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playersVisual: {fileID: 3276059594670172932}
-  _dieColor: {r: 0.5, g: 0.12971699, b: 0.12971699, a: 1}
+  _hurtColor: {r: 0.5754717, g: 0.13300997, b: 0.13300997, a: 1}
   _startHealth: 10
   _damageCooldown: 0.4
   _diyingSpeed: 0.1
@@ -247,26 +244,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _startDamage: 2
   _fist: {fileID: 8134601074749252736}
-  _isLeftPartOfKeyboard: 1
   _attackPosition: {x: 1.15, y: 0}
   _attackRadius: 0.5
   _attackDuration: 1
   _playerMask:
     serializedVersion: 2
     m_Bits: 64
---- !u!114 &-6692574607864425083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368649293943814034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5dc781e8bf61a645ab666ebc3c2f9a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _hellDepth: -10
 --- !u!114 &-416867404271020856
 MonoBehaviour:
   m_ObjectHideFlags: 0

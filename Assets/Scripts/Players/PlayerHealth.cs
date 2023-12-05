@@ -5,7 +5,7 @@ using Zenject;
 public class PlayerHealth : MonoBehaviour, IDamagable
 {
     [SerializeField] private SpriteRenderer _playersVisual;
-    [SerializeField] private Color _dieColor;
+    [SerializeField] private Color _hurtColor;
     [SerializeField] private int _startHealth;
     [SerializeField] private float _damageCooldown;
     [SerializeField] private float _diyingSpeed;
@@ -24,19 +24,12 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     public int StartHealth => _startHealth;
     public int CurrentHealth => _currentHealth;
 
-    [Inject]
-    private void Construct(PlayerComponents components)
+    private void Start()
     {
-        _components = components;
+        _components = this.GetComponent<PlayerComponents>();
 
         _currentHealth = _startHealth;
         _defaultColor = _playersVisual.color;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-            TakeDamage(2);
     }
 
     private void FixedUpdate()
@@ -64,7 +57,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     private void GetHit(int damage)
     {
-        _playersVisual.color = _dieColor;
+        _playersVisual.color = _hurtColor;
 
         _currentHealth -= damage;
 

@@ -7,14 +7,16 @@ public class PlayerDieFromFall : MonoBehaviour
 
     private PlayerComponents _components;
 
-    [Inject]
-    private void Construct(PlayerComponents components)
+    private void Start()
     {
-        _components = components;
+        _components = this.GetComponent<PlayerComponents>();
     }
 
     private void FixedUpdate()
     {
+        if (_components == null)
+            return;
+
         if (_components.Transform.position.y < Mathf.Abs(_hellDepth) * -1)
             _components.Health.TakeDamage(666);
     }

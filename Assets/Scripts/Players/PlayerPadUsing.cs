@@ -1,5 +1,4 @@
 using UnityEngine;
-using Zenject;
 
 public class PlayerPadUsing : MonoBehaviour
 {
@@ -8,10 +7,9 @@ public class PlayerPadUsing : MonoBehaviour
     public IBoostEffect ActieveEffect { get; private set; }
     public float ActieveEffectProgress { get; private set; }
 
-    [Inject]
-    private void Construct(PlayerComponents components)
+    private void Start()
     {
-        _components = components;
+        _components = this.GetComponent<PlayerComponents>();
     }
 
     void Update()
@@ -30,7 +28,7 @@ public class PlayerPadUsing : MonoBehaviour
 
     private void ActivateEffect()
     {
-        if (Input.GetKeyDown(KeyCode.X))
+        if (Input.GetKeyDown(ControllsConfig.Use))
         {
             if (_components.PadTaker.EffectType == TypeOfEffect.Default)
                 return;

@@ -6,7 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerHealth))]
 [RequireComponent(typeof(PlayerAttack))]
-[RequireComponent(typeof(PlayerDieFromFall))]
 [RequireComponent(typeof(PlayerPadTaker))]
 [RequireComponent(typeof(PlayerPadUsing))]
 public class PlayerComponents : MonoBehaviour
@@ -17,7 +16,6 @@ public class PlayerComponents : MonoBehaviour
     [SerializeField] private PlayerMovement _movement;
     [SerializeField] private PlayerHealth _health;
     [SerializeField] private PlayerAttack _attack;
-    [SerializeField] private PlayerDieFromFall _dieFromFall;
     [SerializeField] private PlayerPadTaker _padTaker;
     [SerializeField] private PlayerPadUsing _padUsing;
 
@@ -27,7 +25,6 @@ public class PlayerComponents : MonoBehaviour
     public PlayerMovement Movement => _movement;
     public PlayerHealth Health => _health;
     public PlayerAttack Attack => _attack;
-    public PlayerDieFromFall DieFromFall => _dieFromFall;
     public PlayerPadTaker PadTaker => _padTaker;
     public PlayerPadUsing PadUsing => _padUsing;
 }
