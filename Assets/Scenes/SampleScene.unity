@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &223188610 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3799304355791377648, guid: 40f0f79693b290c4980b156b4551849c, type: 3}
+  m_PrefabInstance: {fileID: 3799304355882893835}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &288047523
 GameObject:
   m_ObjectHideFlags: 0
@@ -132,7 +137,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 288047524}
-  - component: {fileID: 288047526}
   - component: {fileID: 288047525}
   m_Layer: 0
   m_Name: SceneContextInit
@@ -168,40 +172,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90418b1329af32845a863d8a0a9451a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects:
+  - {fileID: 223188610}
+  - {fileID: 425540474}
   _playerPrefab: {fileID: 5465238290782925045, guid: a29d24c3071ff0a45b9c31331803ff95, type: 3}
   _spawnPoints: {fileID: 425540480}
---- !u!114 &288047526
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288047523}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 89715ad69b973a14899afa2c6730b30b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _scriptableObjectInstallers: []
-  _monoInstallers:
-  - {fileID: 288047525}
-  _installerPrefabs: []
-  _autoRun: 1
-  OnPreInstall:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPostInstall:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPreResolve:
-    m_PersistentCalls:
-      m_Calls: []
-  OnPostResolve:
-    m_PersistentCalls:
-      m_Calls: []
-  _parentNewObjectsUnderSceneContext: 0
-  _contractNames: []
-  _parentContractNames: []
 --- !u!1 &425540474
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,5 +1100,9 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 519420031}
+    - target: {fileID: 3799304356058962299, guid: 40f0f79693b290c4980b156b4551849c, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40f0f79693b290c4980b156b4551849c, type: 3}

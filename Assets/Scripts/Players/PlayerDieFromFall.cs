@@ -1,17 +1,18 @@
 using UnityEngine;
-using Zenject;
+using VContainer;
 
 public class PlayerDieFromFall : MonoBehaviour
 {
     [SerializeField] private float _hellDepth = 10;
 
     private PlayerComponents _components;
-
-    private void Start()
+    
+    [Inject]
+    private void Construct(PlayerComponents components)
     {
-        _components = this.GetComponent<PlayerComponents>();
+        _components = components;
     }
-
+    
     private void FixedUpdate()
     {
         if (_components == null)

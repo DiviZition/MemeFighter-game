@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using Zenject;
+using VContainer;
 
 public class EffectsIndicator : MonoBehaviour
 {
@@ -28,7 +28,7 @@ public class EffectsIndicator : MonoBehaviour
 
     private void SetupEffectInPocket()
     {
-        if(_components.PadTaker.IsHasBoost == false)
+        if(_components == null || _components.PadTaker.IsHasBoost == false)
         {
             _effectInPocketIcon.enabled = false;
             _effectInPocketType = TypeOfEffect.Default;
@@ -47,7 +47,7 @@ public class EffectsIndicator : MonoBehaviour
 
     private void SetupActieveEffect()
     {
-        if (_components.PadUsing.ActieveEffect == null)
+        if (_components == null || _components.PadUsing.ActieveEffect == null)
         {
             _effectInUseIcon.enabled = false;
             _effectInUseType = TypeOfEffect.Default;
@@ -65,7 +65,7 @@ public class EffectsIndicator : MonoBehaviour
 
     private void UpdateActieveEffectsProgress()
     {
-        if (_components.PadUsing.ActieveEffect == null)
+        if (_components == null || _components.PadUsing.ActieveEffect == null)
         {
             _effectProgress.fillAmount = 0;
             return;
