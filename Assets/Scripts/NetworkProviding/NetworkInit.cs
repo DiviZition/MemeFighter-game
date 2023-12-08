@@ -4,10 +4,28 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Fusion;
 using Fusion.Sockets;
+using VContainer;
+using VContainer.Unity;
 
 public class NetworkInit : MonoBehaviour, INetworkRunnerCallbacks
 {
+    [SerializeField] private NetworkObject _playerPrefab;
+    [SerializeField] private PlayerDependentLifetimeScope _playerScope;
+
+    private Dictionary<PlayerRef, NetworkObject> _players = new Dictionary<PlayerRef, NetworkObject>();
+
     private NetworkRunner _runner;
+    private SpawnPoints _spawnPoints;
+    private IContainerBuilder _builder;
+    private GameLifetimeScope _gameLifeTimeScope;
+
+    [Inject]
+    private void Construct(GameLifetimeScope lifeTimeScope, SpawnPoints spawnPoints)
+    {
+        Debug.Log("Injected networkinit");
+        _gameLifeTimeScope = lifeTimeScope;
+        _spawnPoints = spawnPoints;
+    }
 
     private void OnGUI()
     {
@@ -48,6 +66,28 @@ public class NetworkInit : MonoBehaviour, INetworkRunnerCallbacks
         });
     }
 
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        if (runner.IsServer == false)
+            return;
+
+        Debug.Log("Players ID: " + player.PlayerId);
+
+        NetworkObject newPlayer = runner.Spawn(_playerPrefab,
+            _spawnPoints.GetNextSpawnPoint(player.PlayerId), Quaternion.identity, player);
+
+        _players.Add(player, newPlayer);
+        _playerScope.RegisterAndInjectPlayer(newPlayer.GetComponent<PlayerComponents>());
+    }
+
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) 
+    {
+        if(_players.TryGetValue(player, out NetworkObject playersObject) == true)
+        {
+            _players.Remove(player);
+        }
+    }
+
     //Non used callbacks
     public void OnConnectedToServer(NetworkRunner runner) { }
 
@@ -68,10 +108,6 @@ public class NetworkInit : MonoBehaviour, INetworkRunnerCallbacks
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
 
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) { }
-
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
-
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
 
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
 

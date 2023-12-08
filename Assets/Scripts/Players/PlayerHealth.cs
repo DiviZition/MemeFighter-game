@@ -1,5 +1,5 @@
-using System.Collections;
 using UnityEngine;
+using VContainer;
 
 public class PlayerHealth : MonoBehaviour, IDamagable
 {
@@ -23,16 +23,29 @@ public class PlayerHealth : MonoBehaviour, IDamagable
     public int StartHealth => _startHealth;
     public int CurrentHealth => _currentHealth;
 
-    private void Start()
+    public bool IsInvincibleAfterHit => _damageTimer < _damageCooldown;
+
+    [Inject]
+    private void Construct(PlayerComponents components)
     {
-        _components = this.GetComponent<PlayerComponents>();
+        _components = components;
 
         _currentHealth = _startHealth;
         _defaultColor = _playersVisual.color;
+
+        _damageTimer = _damageCooldown;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+            TakeDamage(1);
     }
 
     private void FixedUpdate()
     {
+        _damageTimer += Time.deltaTime;
+
         if (_isHaveToDie == true)
             Die();
         else
@@ -41,7 +54,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
 
     public void TakeDamage(int damage)
     {
-        if (_damageTimer > Time.time)
+        if (_damageTimer < _damageCooldown)
             return;
 
         if (IsHaveHitProtection == true)
@@ -50,7 +63,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
             return;
         }
 
-        _damageTimer = Time.time + _damageCooldown;
+        _damageTimer = 0;
         GetHit(damage);
     }
 
@@ -99,7 +112,7 @@ public class PlayerHealth : MonoBehaviour, IDamagable
         _components.Transform.localScale = Vector3.MoveTowards
             (_components.Transform.localScale, Vector3.zero, _diyingSpeed);
 
-        if(_components.Transform.localScale == Vector3.zero)
-            Destroy(this.gameObject);
+        if (_components.Transform.localScale == Vector3.zero)
+            MonoBehaviour.Destroy(_components.gameObject);
     }
 }

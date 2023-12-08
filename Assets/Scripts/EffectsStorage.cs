@@ -11,6 +11,7 @@ public class EffectsStorage : MonoBehaviour
     [SerializeField] private HealEffect _healEffect;
     [SerializeField] private OneHitShieldEffect _oneHitShieldEffect;
     [SerializeField] private DeathProtectionEffect _deathProtectionEffect;
+    [SerializeField] private AttackCoolDownReduction _attackCoolDownReduction;
 
     public static List<IBoostEffect> Effects { get; private set; } = new List<IBoostEffect>(8);
 
@@ -23,6 +24,7 @@ public class EffectsStorage : MonoBehaviour
         Effects.Add(_healEffect);
         Effects.Add(_oneHitShieldEffect);
         Effects.Add(_deathProtectionEffect);
+        Effects.Add(_attackCoolDownReduction);
     }
 
     public static IBoostEffect GetEffect(TypeOfEffect type)
@@ -46,4 +48,5 @@ public enum TypeOfEffect
     Heal = 4,
     OneHitShield = 5,
     DeathProtection = 6,
+    AttackCoolDownReduction = 7,
 }

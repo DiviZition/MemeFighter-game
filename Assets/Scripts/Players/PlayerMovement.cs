@@ -1,4 +1,6 @@
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -16,16 +18,19 @@ public class PlayerMovement : MonoBehaviour
     private Collider2D[] _trash = new Collider2D[2];
     private float _firstJumpCooleDown;
     private float _currentAdditionalJumps;
-    private bool _isGrounded;
+    private float _currentSpeed;
 
-    public float CurrentSpeed => _defaultSpeed;
+    public bool IsGrounded { get; private set; }
+    public float CurrentSpeed => _currentSpeed;
+    public float DefaultSpeed => _defaultSpeed;
 
-    private void Start()
+    [Inject]
+    private void Construct(PlayerComponents components)
     {
-        PlayerComponents components = this.GetComponent<PlayerComponents>();
-
         _transform = components.Transform;
         _rbPlayer = components.Rigidbody;
+
+        _currentSpeed = _defaultSpeed;
     }
 
     private void Update()
@@ -49,7 +54,8 @@ public class PlayerMovement : MonoBehaviour
         {
             Deirection = -1;
         }
-        _rbPlayer.velocity = new Vector2(Deirection * _defaultSpeed, _rbPlayer.velocity.y);
+        _rbPlayer.velocity = new Vector2(Deirection * _currentSpeed, _rbPlayer.velocity.y);
+
         if (Deirection != 0 && Mathf.Sign(_transform.localScale.x) != Mathf.Sign(Deirection))
         {
             _transform.localScale = new Vector3
@@ -62,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKeyDown(ControllsConfig.Jump) || Input.GetKeyDown(ControllsConfig.Up))
         {
-            if (_isGrounded == true && _firstJumpCooleDown < Time.time)
+            if (IsGrounded == true && _firstJumpCooleDown < Time.time)
             {
                 _rbPlayer.velocity = new Vector2(_rbPlayer.velocity.x, _jumpImpuls);
                 _firstJumpCooleDown = Time.time + 0.1f;
@@ -90,23 +96,14 @@ public class PlayerMovement : MonoBehaviour
             _radiusOfChecker, _trash, _groundedMask) > 1)
         {
             ResetJumps();
-            _isGrounded = true;
+            IsGrounded = true;
         }
         else
         {
-            _isGrounded = false;
+            IsGrounded = false;
         }
     }
 
     public void ResetJumps() => _currentAdditionalJumps = _additionalJumps;
-    public void ChangeSpeed(float newSpeed) => _defaultSpeed = newSpeed;
-
-    private void OnDrawGizmos()
-    {
-        if (_transform == null)
-            return;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere((Vector2)_transform.position + _groundCheckerOffset, _radiusOfChecker);
-    }
+    public void ChangeSpeed(float newSpeed) => _currentSpeed = newSpeed;
 }

@@ -4,10 +4,9 @@ using UnityEngine;
 public class PlayerAttack : MonoBehaviour
 {
     [SerializeField] private int _startDamage;
-    [SerializeField] private SpriteRenderer _fist;
     [SerializeField] private Vector2 _attackPosition;
     [SerializeField] private float _attackRadius;
-    [SerializeField] private float _attackDuration;
+    [SerializeField] private float _defaultAttackDuration;
     [SerializeField] private LayerMask _playerMask;
 
     private Transform _transform;
@@ -15,6 +14,9 @@ public class PlayerAttack : MonoBehaviour
     private float _attackTimer;
     private int _currentDamage;
 
+    public float DefaultAttackDuration => _defaultAttackDuration;
+    public float AttackDuration { get; private set; }
+    public bool IsAttacking { get; private set; }
     public int CurrentDamage => _currentDamage;
     public int StartDamage => _startDamage;
 
@@ -22,19 +24,19 @@ public class PlayerAttack : MonoBehaviour
     {
         _transform = this.GetComponent<Transform>();
         _attackCotoutine = AttackLogic();
+        AttackDuration = _defaultAttackDuration;
     }
 
     private void Update()
     {
         DoAttack();
-
     }
 
     private void DoAttack()
     {
         if (Input.GetKeyDown(ControllsConfig.Attack) && _attackTimer < Time.time)
         {
-            _attackTimer = Time.time + _attackDuration;
+            _attackTimer = Time.time + AttackDuration;
             _attackCotoutine = AttackLogic();
             StartCoroutine(_attackCotoutine);
         }
@@ -51,16 +53,17 @@ public class PlayerAttack : MonoBehaviour
             overlappedCollider.gameObject.GetComponent<IDamagable>().TakeDamage(_currentDamage);
         }
 
-        _fist.enabled = true;
+        IsAttacking = true;
 
-        yield return new WaitForSeconds(_attackDuration);
-
-        _fist.enabled = false;
+        yield return new WaitForSeconds(AttackDuration);
+        
+        IsAttacking = false;
 
         StopCoroutine(_attackCotoutine);
     }
 
     public void ChangeDamage(int newDamage) => _currentDamage = newDamage;
+    public void ChangeAttackCoolDown(float newDamageCoolDown) => AttackDuration = newDamageCoolDown;
 
     private void OnDrawGizmos()
     {

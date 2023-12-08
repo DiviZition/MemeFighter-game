@@ -22,13 +22,13 @@ public struct IncreaseSpeedEffect : IBoostEffect
     {
         Progress += Time.deltaTime / _effectDuration;
 
-        if (_components == null)
-            _components = components;
-
-        if (Progress > 1)
+        if (Progress > 1 && IsEnded == false)
         {
-            _components.Movement.ChangeSpeed
-                (_components.Movement.CurrentSpeed - Mathf.Abs(_additionalSpeed));
+            Debug.Log("Inn");
+
+            components.Movement.ChangeSpeed
+                (components.Movement.CurrentSpeed - Mathf.Abs(_additionalSpeed));
+
             IsEnded = true;
             return;
         }
@@ -36,9 +36,10 @@ public struct IncreaseSpeedEffect : IBoostEffect
         if (_isFirstStepDone == true)
             return;
 
+        _components = components;
         _isFirstStepDone = true;
-        _components.Movement.ChangeSpeed
-            (_components.Movement.CurrentSpeed + Mathf.Abs(_additionalSpeed));
+        components.Movement.ChangeSpeed
+            (components.Movement.CurrentSpeed + Mathf.Abs(_additionalSpeed));
     }
 
     public void ResetValues()
